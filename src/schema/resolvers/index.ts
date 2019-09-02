@@ -1,22 +1,21 @@
 import { IResolvers } from "graphql-tools";
-import { lastFM } from "../../services/lastfm";
 
 const resolvers: IResolvers = {
   Query: {
     lastfm: () => ({})
   },
   LastFM: {
-    user: (_: any, { user }: any) => {
+    user: (_root, { user }) => {
       return { user };
     }
   },
   User: {
-    info: async ({ user }: any) => {
-      const data = await lastFM({ resource: "user", method: "getInfo", user });
+    info: async ({ user }, _args, { dataSources: { LastFM } }) => {
+      const data = await LastFM.call({ resource: "user", method: "getInfo", user });
       return data.user;
     },
-    tracks: ({ user }: any, { limit, page }: any) => ({ user, limit, page }),
-    top: ({ user }: any, { period, limit, page }) => ({ user, period, limit, page}),
+    tracks: ({ user }, { limit, page }) => ({ user, limit, page }),
+    top: ({ user }, { period, limit, page }) => ({ user, period, limit, page}),
   },
   UserInfo: {
     images({ image }) {
@@ -24,26 +23,26 @@ const resolvers: IResolvers = {
     }
   },
   UserTops: {
-    albums: async ({ user, period, limit, page }: any) => {
-      const { topalbums: { album }} = await lastFM({ resource: "user", method: "getTopAlbums", user, period, limit, page });
+    albums: async ({ user, period, limit, page }, _args, { dataSources: { LastFM }}) => {
+      const { topalbums: { album }} = await LastFM.call({ resource: "user", method: "getTopAlbums", user, period, limit, page });
       return album;
     },
-    artists: async ({ user, period, limit, page }: any) => {
-      const { topartists: { artist }} = await lastFM({ resource: "user", method: "getTopArtists", user, period, limit, page });
+    artists: async ({ user, period, limit, page }, _args, { dataSources: { LastFM }}) => {
+      const { topartists: { artist }} = await LastFM.call({ resource: "user", method: "getTopArtists", user, period, limit, page });
       return artist;
     },
-    tracks: async ({ user, period, limit, page }: any) => {
-      let { toptracks: { track }} = await lastFM({ resource: "user", method: "getTopTracks", user, period, limit, page });
+    tracks: async ({ user, period, limit, page }, _args, { dataSources: { LastFM }}) => {
+      let { toptracks: { track }} = await LastFM.call({ resource: "user", method: "getTopTracks", user, period, limit, page });
       return track;
     },
   },
   UserTracks: {
-    recent: async ({ user }: any, { limit, page }: any) => {
-      const { recenttracks: { track }} = await lastFM({ resource: "user", method: "getRecentTracks", user, limit, page });
+    recent: async ({ user }, { limit, page }, { dataSources: { LastFM }}) => {
+      const { recenttracks: { track }} = await LastFM.call({ resource: "user", method: "getRecentTracks", user, limit, page });
       return track;
     },
-    loved: async ({ user }: any, { limit, page }: any) => {
-      const { lovedtracks: { track }} = await lastFM({ resource: "user", method: "getLovedTracks", user, limit, page });
+    loved: async ({ user }, { limit, page }, { dataSources: { LastFM }}) => {
+      const { lovedtracks: { track }} = await LastFM.call({ resource: "user", method: "getLovedTracks", user, limit, page });
       return track;
     },
   },
