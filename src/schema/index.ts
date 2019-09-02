@@ -4,14 +4,14 @@ import { resolvers } from "./resolvers";
 // Datasources
 import { LastFM } from "../datasources/lastfm";
 
-const Schema = {
+const schema = {
   typeDefs,
   resolvers,
   dataSources: () => {
     return {
       LastFM: new LastFM()
     };
-  }
+  },
 };
 
-export { Schema }
+export { schema }

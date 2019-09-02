@@ -25,9 +25,11 @@ export class LastFM extends RESTDataSource {
   }
 
   async call({ resource, method, ...options }: ILastFMOptions) {
-    const query = Object.keys(options).reduce((querystring: string, key: string, index: number): string => {
-      return querystring + `${key}=${options[key]}&`;
-    }, "") + `method=${resource}.${method}`;
+    const query = Object.keys(options)
+      .reduce((querystring: string[], key: string): string[] => {
+        querystring.push(`${key}=${options[key]}`);
+        return querystring;
+      }, [`method=${resource}.${method}`]).join("&");
     return this.get("", query);
   }
 }

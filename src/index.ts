@@ -5,10 +5,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 // Apollo-Server Schema
-import { Schema } from "./schema";
+import { schema } from "./schema";
 
 // GraphQL Server
-const server = new ApolloServer(Schema);
-server.listen(process.env.port || 8080).then(({ url }) => {
+const server = new ApolloServer(schema);
+server.listen(process.env.port || 8080).then(({ url }: any) => {
   console.log(`🚀 Server ready at ${url}`);
 });
