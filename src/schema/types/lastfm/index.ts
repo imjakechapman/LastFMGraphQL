@@ -1,12 +1,12 @@
 
-// Type Defs
-import { UserDefs } from "./user";
-import { TrackDefs } from "./track";
-import { TagDefs } from "./tag";
 import { gql } from "apollo-server";
 
-import { ArtistDefs } from "./artist";
+// Type Defs
 import { AlbumDefs } from "./album";
+import { ArtistDefs } from "./artist";
+import { TrackDefs } from "./track";
+import { TagDefs } from "./tag";
+import { UserDefs } from "./user";
 
 const LastFMDefs = gql`
   extend type Query {
