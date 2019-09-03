@@ -1,7 +1,6 @@
 import { gql } from "apollo-server";
 
 const UserDefs = gql`
-
   "Last.fm user resource"
   type User {
     info: UserInfo
@@ -21,20 +20,32 @@ const UserDefs = gql`
       "The page number to fetch. Defaults to first page."
       page: Int
     ): UserTops
+
+    "Last.fm user charts"
+    charts: UserCharts
   }
 
-  "Last.fm user info"
-  type UserInfo {
-    playlists: Int!,
-    playcount: Int!,
-    gender: String!,
-    name: String!,
-    subscriber: Int!,
-    url: String!,
-    country: String!,
-    images: [Image]!
-    age: Int!,
-    realname: String!
+  "Last.fm user charts resource"
+  type UserCharts {
+    """
+    Get a list of available charts for this user, expressed as date ranges which can be sent to the chart services.
+    """
+    list: [UserChartList]
+
+    """
+    Get an album chart for a user profile, for a given date range. If no date range is supplied, it will return the most recent album chart for this user.
+    """
+    weeklyAlbums(from: String, to: String): [UserWeeklyAlbum]
+
+    """
+    Get an artist chart for a user profile, for a given date range. If no date range is supplied, it will return the most recent artist chart for this user.
+    """
+    weeklyArtists(from: String, to: String): [UserWeeklyArtist]
+
+    """
+    Get a track chart for a user profile, for a given date range. If no date range is supplied, it will return the most recent track chart for this user.
+    """
+    weeklyTracks(from: String, to: String): [UserWeeklyTrack]
   }
 
   "Last.fm user tracks resources"
@@ -79,14 +90,59 @@ const UserDefs = gql`
   type UserTops {
     "User's top albums"
     albums: [Album]
-    
+
     "User's top artists"
     artists: [Artist]
 
     "User's top tracks"
     tracks: [Track]
   }
-  
+
+  "Last.fm user info"
+  type UserInfo {
+    playlists: Int!
+    playcount: Int!
+    gender: String!
+    name: String!
+    subscriber: Int!
+    url: String!
+    country: String!
+    images: [Image]!
+    age: Int!
+    realname: String!
+  }
+
+  type UserChartList {
+    from: String!
+    to: String!
+  }
+
+  type UserWeeklyAlbum {
+    artist: UserWeeklyArtist
+    rank: Int!
+    mbid: String
+    playcount: Int!
+    name: String!
+    url: String!
+  }
+
+  type UserWeeklyTrack {
+    artist: UserWeeklyArtist
+    rank: Int!
+    mbid: String
+    url: String!
+    image: [Image]
+    name: String!
+    playcount: Int!
+  }
+
+  type UserWeeklyArtist {
+    name: String!
+    mbid: String
+    playcount: Int
+    url: String
+    rank: Int
+  }
 `;
 
 export { UserDefs };
