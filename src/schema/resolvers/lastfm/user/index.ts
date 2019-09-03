@@ -8,7 +8,7 @@ const UserResolvers: IResolvers = {
     },
     charts: ({ user }) => ({ user }),
     tracks: ({ user }, { limit, page }) => ({ user, limit, page }),
-    top: ({ user }, { period, limit, page }) => ({ user, period, limit, page}),
+    top: ({ user }, { period, limit, page }) => ({ user, period, limit, page })
   },
   UserInfo: {
     images({ image }) {

@@ -4,8 +4,8 @@ import { gql } from "apollo-server";
 // Type Defs
 import { AlbumDefs } from "./album";
 import { ArtistDefs } from "./artist";
-import { TrackDefs } from "./track";
 import { TagDefs } from "./tag";
+import { TrackDefs } from "./track";
 import { UserDefs } from "./user";
 
 const LastFMDefs = gql`
@@ -15,22 +15,17 @@ const LastFMDefs = gql`
 
   "Last.fm api resources"
   type LastFM {
-    user(
-      "The user to fetch info for."
-      user: String!
-    ): User
-    
-    track(
-      "The artist name"
-      artist: String!
-
-      "The track name"
-      track: String!
-
-    ): TrackType
+    _empty: String
   }
 `;
 
-const LastFMSchemaDefs = [LastFMDefs, UserDefs, ArtistDefs, AlbumDefs, TagDefs, TrackDefs];
+const LastFMSchemaDefs = [
+  LastFMDefs,
+  UserDefs,
+  ArtistDefs,
+  AlbumDefs,
+  TagDefs,
+  TrackDefs
+];
 
 export { LastFMSchemaDefs };

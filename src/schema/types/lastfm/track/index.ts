@@ -1,6 +1,16 @@
 import { gql } from "apollo-server";
 
 const TrackDefs = gql`
+  extend type LastFM {
+    track(
+      "The artist name"
+      artist: String!
+
+      "The track name"
+      track: String!
+    ): TrackType
+  }
+
   "Last.fm track resources"
   type TrackType {
     info: Track

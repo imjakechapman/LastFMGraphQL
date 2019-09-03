@@ -1,6 +1,10 @@
 import { gql } from "apollo-server";
 
 const UserDefs = gql`
+  extend type LastFM {
+    users("The user to fetch info for." user: String!): User
+  }
+
   "Last.fm user resource"
   type User {
     info: UserInfo

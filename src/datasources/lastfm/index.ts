@@ -1,5 +1,5 @@
 import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
-import { AuthenticationError, ApolloError } from "apollo-server";
+import { ApolloError, AuthenticationError } from "apollo-server";
 
 // Local Types
 export type IResourceTypes = "album" | "artist" | "track" | "user";
